@@ -1,5 +1,5 @@
 #!/bin/bash
-# Bash generate random alphanumeric string UPPERCASE and numeric
+# Bash generate alphanumeric string UPPERCASE and numeric to obfuscate file names
 # Can't be run as superuser or root
 # Ignore name_dictionary.csv file for renaming
 # Keep file extension untouch. 
