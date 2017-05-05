@@ -55,7 +55,7 @@ Initial status
 ```
 
 
-Script executed ```./bash_blind_rename.sh ./temp/ ```
+Script executed ```./bash_blind_rename.sh temp/ ```
 
 Final status
 
