@@ -4,6 +4,8 @@ Bash script to blind rename the files on a folder and saving the new names and o
 
 Works on OSX and Linux (Debian, Ubuntu, Raspian)
 
+The idea was to obfuscate the file names to properly perform a blind analysis on the files, such as images for quantification.
+
 ### Characteristics
     
 1. Bash generate random new alphanumeric string UPPERCASE and numeric as name.
@@ -19,7 +21,7 @@ Works on OSX and Linux (Debian, Ubuntu, Raspian)
 
 *  ```chmod +x bash_blind_rename.sh``` So it can be executed - Only once
     
-* To randomize the names on folder ```temp```
+* To obfuscate the names on folder ```temp```
 
 Initial status    
 
