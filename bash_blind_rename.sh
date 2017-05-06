@@ -18,8 +18,15 @@ if [ ! -d "$1" ]; then
 else
 
 if [ -f "$1/name_dictionary.csv" ];then
-    echo "Files on folder already randomized"
+    echo "Files on folder already renamed"
     exit 1
+else
+
+if [ -f "$1/name_dictionary_DEPRECATED.csv" ];then
+    echo "Files on folder already randomized once and reverted"
+    echo "Please delete name_dictionary_DEPRECATED.csv on $1"
+    exit 1
+
 else
     echo "Oldname,Newname" >> $1/name_dictionary.csv
 
@@ -35,6 +42,7 @@ else
             echo "$file,$NEWNAME.$ext" >> $1/name_dictionary.csv
         
         done
+fi
 fi
 fi
 fi

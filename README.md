@@ -1,6 +1,6 @@
 # Blind Rename files in folder
 
-Bash script to blind rename the files on a folder and saving the new names and old names in a dictionary.
+Bash script to blind rename the files on a folder and saving the new names and old names in a dictionary. Also script to revert file names to original.
 
 Works on OSX and Linux (Debian, Ubuntu, Raspian)
 
@@ -15,6 +15,7 @@ The idea was to obfuscate the file names to properly perform a blind analysis on
 5. Control if folder have been already randomized by existence of 'name_dictionary.csv'
 6. Check that folder it is in fact a folder and do not goes in subfolders
 7. Reduce risk of filename collisions with shasum filename, cut in half
+8. Control if folder have been obfuscate looking for ```name_dictionary_DEPRECATED.csv```
 
 
 ### Use
@@ -90,3 +91,7 @@ total 0
 ```
 
 Subfolder was not afected.
+
+### To revert file names
+
+```./revert_rename.sh folder``` Dictionary now called ```name_dictionary_DEPRECATED.csv```
