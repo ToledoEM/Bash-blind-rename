@@ -6,6 +6,8 @@ Works on OSX and Linux (Debian, Ubuntu, Raspian)
 
 The idea was to obfuscate the file names to properly perform a blind analysis on the files, such as images for quantification.
 
+Now also with GUI, made with [Platypus](https://github.com/sveinbjornt/Platypus)
+
 ### Characteristics
     
 1. Bash generate random new alphanumeric string UPPERCASE and numeric as name.
