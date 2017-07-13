@@ -37,7 +37,8 @@ else
     echo "Oldname,Newname" > $1/name_dictionary.csv
     echo "Newname" > $1/Analysis_file.csv
 
-    for file in $(find  "$1" -maxdepth 1 -type f -printf "%f\n" )
+    #for file in $(find  "$1" -maxdepth 1 -type f -printf "%f\n" ) #doesn't work on OSX
+    for file in $(ls -p "$1" | grep -v /)
 
         do
             if [ "$file" == "name_dictionary.csv" ] || [ "$file" == "Analysis_file.csv" ] ; then
