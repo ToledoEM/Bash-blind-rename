@@ -18,7 +18,8 @@ Now also with GUI, made with [Platypus](https://github.com/sveinbjornt/Platypus)
 6. Check that folder it is in fact a folder and do not goes in subfolders
 7. Reduce risk of filename collisions with shasum filename, cut in half
 8. Control if folder have been obfuscate looking for ```name_dictionary_DEPRECATED.csv```
-9. Create file with only new names to register the manual analysis of the images
+9. Create file with only new names to register the manual analysis of the images 'Analysis_file.csv'
+10. Insensitive to empty spaces in file or folder names
 
 
 ### Use
@@ -101,5 +102,6 @@ Subfolder was not afected.
 
 
 # TO DO
-1. Manage script with special characters in file name.   
+~~1. Manage script with special characters in file name.~~
 ~~2. Create file with new names to be used as input for manual counting.~~
+  3. Update DMG image
