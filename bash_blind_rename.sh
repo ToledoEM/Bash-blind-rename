@@ -23,12 +23,7 @@ if [ ! -d "$1" ]; then
     exit 1
 else
 
-if [ -f "$1/name_dictionary.csv" ];then
-    echo "Files on folder already renamed"
-    exit 1
-else
-
-if [ -f "$1/Analysis_file.csv" ];then
+if [ -f "$1/name_dictionary.csv" ] || [ -f "$1/Analysis_file.csv" ] ;then
     echo "Files on folder already renamed"
     exit 1
 else
@@ -54,7 +49,6 @@ else
             mv  "$1"/$file "$1"/$NEWNAME.$ext
             echo "$NEWNAME.$ext" >> $1/Analysis_file.csv
         done
-fi
 fi
 fi
 fi
