@@ -78,6 +78,7 @@ total 8
 -rw-r--r--   1 et  staff    0 May  4 21:56 C2075C3D1E404186C675.txt
 -rw-r--r--   1 et  staff    0 May  4 21:56 F27A8053EDC3CCE651A2.txt
 -rw-r--r--   1 et  staff  367 May  4 22:01 name_dictionary.csv
+-rw-r--r--   1 et  staff  258 May  4 22:01 Analysis_file.csv
 drwxr-xr-x  12 et  staff  408 May  4 21:56 subfolder/
 
 Mac:Bash_blind_renamer et$ ls -lF temp/subfolder/
