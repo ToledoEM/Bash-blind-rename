@@ -97,3 +97,8 @@ Subfolder was not afected.
 ### To revert file names
 
 ```./revert_rename.sh folder``` Dictionary now called ```name_dictionary_DEPRECATED.csv```
+
+
+# TO DO
+1. Manage script with special characters in file name.   
+2. Create file with new names to be used as input for manual counting.
