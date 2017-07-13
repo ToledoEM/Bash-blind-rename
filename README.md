@@ -12,19 +12,19 @@ Now also with GUI, made with [Platypus](https://github.com/sveinbjornt/Platypus)
     
 1. Bash generate random new alphanumeric string UPPERCASE and numeric as name.
 2. Can't be run as superuser or root
-3. Ignore name_dictionary.csv file for renaming
+3. Ignore ```name_dictionary.csv``` file for renaming
 4. Preserve file extension. 
-5. Control if folder have been already randomized by existence of 'name_dictionary.csv'
+5. Control if folder have been already randomized by existence of ```name_dictionary.csv```
 6. Check that folder it is in fact a folder and do not goes in subfolders
 7. Reduce risk of filename collisions with shasum filename, cut in half
 8. Control if folder have been obfuscate looking for ```name_dictionary_DEPRECATED.csv```
-9. Create file with only new names to register the manual analysis of the images 'Analysis_file.csv'
+9. Create file with only new names to register the manual analysis of the images ```Analysis_file.csv```
 10. Insensitive to empty spaces in file or folder names
 
 
 ### Use
 
-*  ```chmod +x bash_blind_rename.sh``` So it can be executed - Only once
+*  ```chmod +x bash_blind_rename.sh``` So it can be executed 
     
 * To obfuscate the names on folder ```temp```
 
