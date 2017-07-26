@@ -106,6 +106,6 @@ Subfolder was not afected.
 # TO DO
 ~~1. Manage script with special characters in file name.~~       
 ~~2. Create file with new names to be used as input for manual counting.~~          
-~~3. Update DMG image~~
-~~4. Check for number of files to rename~~
-5. Streamline the script with a function for rename
+~~3. Update DMG image~~       
+~~4. Check for number of files to rename~~          
+5. Streamline the script with a function for rename          
