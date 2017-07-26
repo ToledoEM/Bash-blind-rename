@@ -11,15 +11,16 @@ Now also with GUI, made with [Platypus](https://github.com/sveinbjornt/Platypus)
 ### Characteristics
     
 1. Bash generate pseudo-random new alphanumeric string UPPERCASE and numeric as filename
-2. Try to avoid big destructive outcomes as it can't be run as superuser or root
-3. Ignore ```name_dictionary.csv``` file for renaming
-4. Preserve file extension
-5. Control if folder have been already randomized by existence of ```name_dictionary.csv```
-6. Check that folder it is in fact a folder and do not goes in subfolders
-7. Reduce risk of filename collisions with shasum folder and filename, output cut in half
-8. Check if folder have been obfuscate before looking for ```name_dictionary_DEPRECATED.csv```
-9. Create file with only new names to register the manual analysis of the images ```Analysis_file.csv```
-10. Insensitive to empty spaces in file names or folder name
+2. Check if there are too many files in the folder, not practical for manual quantification.
+3. Try to avoid big destructive outcomes as it can't be run as superuser or root
+4. Ignore ```name_dictionary.csv``` file for renaming
+5. Preserve file extension
+6. Control if folder have been already randomized by existence of ```name_dictionary.csv```
+7. Check that folder it is in fact a folder and do not goes in subfolders
+8. Reduce risk of filename collisions with shasum folder and filename, output cut in half
+9. Check if folder have been obfuscate before looking for ```name_dictionary_DEPRECATED.csv```
+10. Create file with only new names to register the manual analysis of the images ```Analysis_file.csv```
+11. Insensitive to empty spaces in file names or folder name
 
 
 ### Use
@@ -106,3 +107,5 @@ Subfolder was not afected.
 ~~1. Manage script with special characters in file name.~~       
 ~~2. Create file with new names to be used as input for manual counting.~~          
 ~~3. Update DMG image~~
+~~4. Check for number of files to rename~~
+5. Streamline the script with a function for rename
