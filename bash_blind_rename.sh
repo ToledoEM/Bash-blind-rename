@@ -10,50 +10,112 @@
 # Create file Analysis_file.csv with only new names to be used for manual analysis
 IFS=$'\n'
 
-echo
-echo
+N=$(find "$1" -maxdepth 1 -type f | wc -l) 
+if [ $N -ge 200 ]
+ then 	
+ echo "There are too many files in $1 for manual quantification"
+ echo
+ read -p "Are you sure to continue? (Y/N)" answer 
+ case ${answer:0:1} in
+    y|Y )
+		echo
+		echo
+		echo
+		
+		if [ "$(id -u)" == "0" ]; then
+		    echo "Sorry, do not run this as superuser."
+		    exit 1
+		else
 
-if [ "$(id -u)" == "0" ]; then
-    echo "Sorry, do not run this as superuser."
-    exit 1
+		if [ ! -d "$1" ]; then
+		    echo "$1 does not exists"
+		    exit 1
+		else
+
+		if [ -f "$1/name_dictionary.csv" ] || [ -f "$1/Analysis_file.csv" ] ;then
+		    echo "Files on folder already renamed"
+		    exit 1
+		else
+
+		if [ -f "$1/name_dictionary_DEPRECATED.csv" ];then
+		    echo "Files on folder already randomized once and reverted"
+		    echo "Please delete name_dictionary_DEPRECATED.csv on $1"
+		    exit 1
+
+		else
+		    echo "Oldname,Newname" > $1/name_dictionary.csv
+		    echo "Newname" > $1/Analysis_file.csv
+
+		    #for file in $(find  "$1" -maxdepth 1 -type f -printf "%f\n" ) #doesn't work on OSX
+		    for file in $(ls -p "$1" | grep -v /)
+
+		        do
+		            if [ "$file" == "name_dictionary.csv" ] || [ "$file" == "Analysis_file.csv" ] ; then
+		                  continue;
+		                 fi
+		            NEWNAME=$(echo $file | shasum | tr '[a-z]' '[A-Z]' |tr -dc 'A-Z0-9' | cut -c 1-20 )
+		            ext=${file##*.}
+		            echo "$file,$NEWNAME.$ext" >> $1/name_dictionary.csv
+		            mv  "$1"/$file "$1"/$NEWNAME.$ext
+		            echo "$NEWNAME.$ext" >> $1/Analysis_file.csv
+		        done
+		fi
+		fi
+		fi
+		fi
+		echo "DONE"
+	;;	
+	*) 
+		echo "Exit without any modification"
+		exit 1
+
+esac
 else
+			echo
+		echo
+		echo
+		
+		if [ "$(id -u)" == "0" ]; then
+		    echo "Sorry, do not run this as superuser."
+		    exit 1
+		else
 
-if [ ! -d "$1" ]; then
-    echo "$1 does not exists"
-    exit 1
-else
+		if [ ! -d "$1" ]; then
+		    echo "$1 does not exists"
+		    exit 1
+		else
 
-if [ -f "$1/name_dictionary.csv" ] || [ -f "$1/Analysis_file.csv" ] ;then
-    echo "Files on folder already renamed"
-    exit 1
-else
+		if [ -f "$1/name_dictionary.csv" ] || [ -f "$1/Analysis_file.csv" ] ;then
+		    echo "Files on folder already renamed"
+		    exit 1
+		else
 
-if [ -f "$1/name_dictionary_DEPRECATED.csv" ];then
-    echo "Files on folder already randomized once and reverted"
-    echo "Please delete name_dictionary_DEPRECATED.csv on $1"
-    exit 1
+		if [ -f "$1/name_dictionary_DEPRECATED.csv" ];then
+		    echo "Files on folder already randomized once and reverted"
+		    echo "Please delete name_dictionary_DEPRECATED.csv on $1"
+		    exit 1
 
-else
-    echo "Oldname,Newname" > $1/name_dictionary.csv
-    echo "Newname" > $1/Analysis_file.csv
+		else
+		    echo "Oldname,Newname" > $1/name_dictionary.csv
+		    echo "Newname" > $1/Analysis_file.csv
 
-    #for file in $(find  "$1" -maxdepth 1 -type f -printf "%f\n" ) #doesn't work on OSX
-    for file in $(ls -p "$1" | grep -v /)
+		    #for file in $(find  "$1" -maxdepth 1 -type f -printf "%f\n" ) #doesn't work on OSX
+		    for file in $(ls -p "$1" | grep -v /)
 
-        do
-            if [ "$file" == "name_dictionary.csv" ] || [ "$file" == "Analysis_file.csv" ] ; then
-                  continue;
-                 fi
-            NEWNAME=$(echo $file | shasum | tr '[a-z]' '[A-Z]' |tr -dc 'A-Z0-9' | cut -c 1-20 )
-            ext=${file##*.}
-            echo "$file,$NEWNAME.$ext" >> $1/name_dictionary.csv
-            mv  "$1"/$file "$1"/$NEWNAME.$ext
-            echo "$NEWNAME.$ext" >> $1/Analysis_file.csv
-        done
+		        do
+		            if [ "$file" == "name_dictionary.csv" ] || [ "$file" == "Analysis_file.csv" ] ; then
+		                  continue;
+		                 fi
+		            NEWNAME=$(echo $file | shasum | tr '[a-z]' '[A-Z]' |tr -dc 'A-Z0-9' | cut -c 1-20 )
+		            ext=${file##*.}
+		            echo "$file,$NEWNAME.$ext" >> $1/name_dictionary.csv
+		            mv  "$1"/$file "$1"/$NEWNAME.$ext
+		            echo "$NEWNAME.$ext" >> $1/Analysis_file.csv
+		        done
+		fi
+		fi
+		fi
+		fi
+		echo "DONE"
 fi
-fi
-fi
-fi
-echo "DONE"
-
 
