@@ -13,15 +13,15 @@ Now also with GUI, made with [Platypus](https://github.com/sveinbjornt/Platypus)
 1. Bash generate pseudo-random new alphanumeric string UPPERCASE and numeric as filename
 2. Check if there are too many files in the folder, not practical for manual quantification.
 3. Try to avoid big destructive outcomes as it can't be run as superuser or root
-4. Ignore ```name_dictionary.csv``` file for renaming
+4. Ignore ```name_dictionary.csv``` and ```Analysis_file.csv``` file for renaming
 5. Preserve file extension
-6. Control if folder have been already randomized by existence of ```name_dictionary.csv```
+6. Control if folder have been already randomized by existence of ```name_dictionary.csv``` or ```Analysis_file.csv```
 7. Check that folder it is in fact a folder and do not goes in subfolders
-8. Reduce risk of filename collisions with shasum folder and filename, output cut in half
-9. Check if folder have been obfuscate before looking for ```name_dictionary_DEPRECATED.csv```
-10. Create file with only new names to register the manual analysis of the images ```Analysis_file.csv```
-11. Insensitive to empty spaces in file names or folder name
-
+8. Reduce risk of filename collisions with shasum folder and filename, output cut in half      
+9. Using the script ```revert_rename.sh``` will read the ```name_dictionary.csv``` and return the file to their original name      
+10. Check if folder have been obfuscate before looking for ```name_dictionary_DEPRECATED.csv```
+11. Create file with only new names for the manual analysis of the images ```Analysis_file.csv```
+12. Insensitive to empty spaces in file names or folder name
 
 ### Use
 
