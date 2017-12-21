@@ -11,11 +11,11 @@
 IFS=$'\n'
 
 N=$(find "$1" -maxdepth 1 -type f | wc -l) 
-if [ $N -ge 200 ]
+if [ "$N" -ge 200 ]
  then 	
  echo "There are too many files in $1 for manual quantification"
  echo
- read -p "Are you sure to continue? (Y/N)" answer 
+ read -p -r "Are you sure to continue? (Y/N)" answer 
  case ${answer:0:1} in
     y|Y )
 		echo
@@ -43,8 +43,8 @@ if [ $N -ge 200 ]
 		    exit 1
 
 		else
-		    echo "Oldname,Newname" > $1/name_dictionary.csv
-		    echo "Newname" > $1/Analysis_file.csv
+		    echo "Oldname,Newname" > "$1/name_dictionary.csv"
+		    echo "Newname" > "$1/Analysis_file.csv"
 
 		    #for file in $(find  "$1" -maxdepth 1 -type f -printf "%f\n" ) #doesn't work on OSX
 		    for file in $(ls -p "$1" | grep -v /)
@@ -53,11 +53,11 @@ if [ $N -ge 200 ]
 		            if [ "$file" == "name_dictionary.csv" ] || [ "$file" == "Analysis_file.csv" ] ; then
 		                  continue;
 		                 fi
-		            NEWNAME=$(echo $file | shasum | tr '[a-z]' '[A-Z]' |tr -dc 'A-Z0-9' | cut -c 1-20 )
+		            NEWNAME=$(echo $file | shasum | tr 'a-z' 'A-Z' |tr -dc 'A-Z0-9' | cut -c 1-20 )
 		            ext=${file##*.}
-		            echo "$file,$NEWNAME.$ext" >> $1/name_dictionary.csv
-		            mv  "$1"/$file "$1"/$NEWNAME.$ext
-		            echo "$NEWNAME.$ext" >> $1/Analysis_file.csv
+		            echo "$file,$NEWNAME.$ext" >> "$1/name_dictionary.csv"
+		            mv  "$1/$file" "$1/$NEWNAME.$ext"
+		            echo "$NEWNAME.$ext" >> "$1/Analysis_file.csv"
 		        done
 		fi
 		fi
@@ -106,11 +106,11 @@ else
 		            if [ "$file" == "name_dictionary.csv" ] || [ "$file" == "Analysis_file.csv" ] ; then
 		                  continue;
 		                 fi
-		            NEWNAME=$(echo $file | shasum | tr '[a-z]' '[A-Z]' |tr -dc 'A-Z0-9' | cut -c 1-20 )
+		            NEWNAME=$(echo $file | shasum | tr 'a-z' 'A-Z' |tr -dc 'A-Z0-9' | cut -c 1-20 )
 		            ext=${file##*.}
-		            echo "$file,$NEWNAME.$ext" >> $1/name_dictionary.csv
-		            mv  "$1"/$file "$1"/$NEWNAME.$ext
-		            echo "$NEWNAME.$ext" >> $1/Analysis_file.csv
+		            echo "$file,$NEWNAME.$ext" >> "$1/name_dictionary.csv"
+		            mv  "$1/$file" "$1/$NEWNAME.$ext"
+		            echo "$NEWNAME.$ext" >> "$1/Analysis_file.csv"
 		        done
 		fi
 		fi
