@@ -1,108 +1,92 @@
-# Blind Rename files in folder
+# Blind Rename Files in Folder
 
-Bash script to blind rename the files on a folder and saving the new names and old names in a dictionary. Also script to revert file names to original.
+A Bash script to blind-rename files in a folder, saving the mapping of old and new names in a dictionary. Includes a script to revert file names to their original state.
 
-Works on OSX and Linux (Debian, Ubuntu, Raspian)
+Works on **macOS** and **Linux** (Debian, Ubuntu, Raspbian).
 
-The idea was to obfuscate the file names to properly perform a blind analysis on the files, such as images for quantification.
+## Features
 
-Now also with GUI, made with [Platypus](https://github.com/sveinbjornt/Platypus)
+- Generates pseudo-random, uppercase alphanumeric filenames using `shasum`.
+- Prevents destructive outcomes: cannot be run as superuser/root.
+- Ignores `name_dictionary.csv` and `Analysis_file.csv` during renaming.
+- Preserves file extensions.
+- Detects if a folder has already been randomized (checks for `name_dictionary.csv`).
+- Only processes files in the specified folder (does not recurse into subfolders).
+- Reduces risk of filename collisions by using a hash of the filename.
+- Detects if a folder has been previously obfuscated (checks for `name_dictionary_DEPRECATED.csv`).
+- Creates `Analysis_file.csv` with only new names for manual analysis.
+- Handles filenames and folder names with spaces or special characters.
 
-### Characteristics
-    
-1. Bash generate pseudo-random new alphanumeric string UPPERCASE and numeric as filename
-2. Try to avoid big destructive outcomes as it can't be run as superuser or root
-3. Ignore ```name_dictionary.csv``` file for renaming
-4. Preserve file extension
-5. Control if folder have been already randomized by existence of ```name_dictionary.csv```
-6. Check that folder it is in fact a folder and do not goes in subfolders
-7. Reduce risk of filename collisions with shasum folder and filename, output cut in half
-8. Check if folder have been obfuscate before looking for ```name_dictionary_DEPRECATED.csv```
-9. Create file with only new names to register the manual analysis of the images ```Analysis_file.csv```
-10. Insensitive to empty spaces in file names or folder name
+## Requirements
 
+- Bash (tested on macOS and Linux)
+- `shasum` utility (pre-installed on most systems)
 
-### Use
+## Usage
 
-*  ```chmod +x bash_blind_rename.sh``` So it can be executed 
-    
-* To obfuscate the names on folder ```temp```
+1. Make the script executable:
 
-Initial status    
+   ```bash
+   chmod +x bash_blind_rename.sh
+   chmod +x revert_rename.sh
+   ```
 
-```
-   Mac:et$ ls -lF temp/
-	total 0
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_1.txt    
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_10.txt    
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_2.txt    
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_3.txt    
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_4.txt   
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_5.txt   
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_6.txt    
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_7.txt    
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_8.txt   
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_9.txt    
-	drwxr-xr-x  12 et  staff  408 May  4 21:56 subfolder/     
-	
-	Mac:Bash_blind_renamer et$ ls -lF temp/subfolder/
-	total 0
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_1.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_10.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_2.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_3.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_4.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_5.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_6.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_7.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_8.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_9.txt
-```
+2. To obfuscate the names in a folder (e.g., `temp/`):
 
+   ```bash
+   ./bash_blind_rename.sh temp/
+   ```
 
-Script executed ```./bash_blind_rename.sh temp/ ```
+   - Only files in `temp/` will be renamed. Subfolders are not affected.
+   - A mapping is saved in `temp/name_dictionary.csv`.
+   - New names are listed in `temp/Analysis_file.csv` for manual analysis.
 
-Final status
+3. To revert file names:
+
+   ```bash
+   ./revert_rename.sh temp/
+   ```
+
+   - Uses `name_dictionary.csv` to restore original names.
+   - The dictionary is renamed to `name_dictionary_DEPRECATED.csv` after use.
+
+## Example
+
+**Before:**
 
 ```
-Mac:Bash_blind_renamer et$ ls -lF temp/
-total 8
--rw-r--r--   1 et  staff    0 May  4 21:56 007937B3F4F4D9F58B7D.txt
--rw-r--r--   1 et  staff    0 May  4 21:56 0A8894E19F79239FE547.txt
--rw-r--r--   1 et  staff    0 May  4 21:56 13840CB7444D948C078B.txt
--rw-r--r--   1 et  staff    0 May  4 21:56 36372FE3EFD9EAA7A04D.txt
--rw-r--r--   1 et  staff    0 May  4 21:56 36F6B95EC8138AE7A2E0.txt
--rw-r--r--   1 et  staff    0 May  4 21:56 3C27A89C60DE090DE1F6.txt
--rw-r--r--   1 et  staff    0 May  4 21:56 760A83AE04023DD099FC.txt
--rw-r--r--   1 et  staff    0 May  4 21:56 7F4C851ECC1AC1FDE5DF.txt
--rw-r--r--   1 et  staff    0 May  4 21:56 C2075C3D1E404186C675.txt
--rw-r--r--   1 et  staff    0 May  4 21:56 F27A8053EDC3CCE651A2.txt
--rw-r--r--   1 et  staff  367 May  4 22:01 name_dictionary.csv
--rw-r--r--   1 et  staff  258 May  4 22:01 Analysis_file.csv
-drwxr-xr-x  12 et  staff  408 May  4 21:56 subfolder/
-
-Mac:Bash_blind_renamer et$ ls -lF temp/subfolder/
-total 0
--rw-r--r--  1 et  staff  0 May  4 21:56 bar_1.txt
--rw-r--r--  1 et  staff  0 May  4 21:56 bar_10.txt
--rw-r--r--  1 et  staff  0 May  4 21:56 bar_2.txt
--rw-r--r--  1 et  staff  0 May  4 21:56 bar_3.txt
--rw-r--r--  1 et  staff  0 May  4 21:56 bar_4.txt
--rw-r--r--  1 et  staff  0 May  4 21:56 bar_5.txt
--rw-r--r--  1 et  staff  0 May  4 21:56 bar_6.txt
--rw-r--r--  1 et  staff  0 May  4 21:56 bar_7.txt
--rw-r--r--  1 et  staff  0 May  4 21:56 bar_8.txt
--rw-r--r--  1 et  staff  0 May  4 21:56 bar_9.txt
+$ ls temp/
+foo1.txt  foo2.txt  ...  subfolder/
+$ ls temp/subfolder/
+bar1.txt  bar2.txt  ...
 ```
 
-Subfolder was not afected.
+**After running:**
 
-### To revert file names
+```
+$ ./bash_blind_rename.sh temp/
+$ ls temp/
+A1B2C3D4E5F6G7H8I9J0.txt  ...  name_dictionary.csv  Analysis_file.csv  subfolder/
+$ ls temp/subfolder/
+bar1.txt  bar2.txt  ...
+```
 
-```./revert_rename.sh folder``` Dictionary now called ```name_dictionary_DEPRECATED.csv```
+Subfolders are not affected.
 
+## Notes
 
-# TO DO
-~~1. Manage script with special characters in file name.~~       
-~~2. Create file with new names to be used as input for manual counting.~~          
-~~3. Update DMG image~~
+- Do **not** run as root or with `sudo`.
+- If `name_dictionary.csv` or `Analysis_file.csv` exists, the script will not run to prevent accidental overwrites.
+- If `name_dictionary_DEPRECATED.csv` exists, delete it before running the script again.
+
+## .gitignore
+
+The `.gitignore` file ignores the `temp/` folder and common system files.
+
+## License
+
+See [LICENSE](LICENSE).
+
+---
+
+*Contributions welcome!*
