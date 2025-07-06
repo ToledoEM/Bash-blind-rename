@@ -1,0 +1,6 @@
+# Ignore temp and test folders
+temp/
+*.log
+*.tmp
+# Ignore macOS system files
+.DS_Store
