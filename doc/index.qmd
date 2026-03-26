@@ -144,4 +144,4 @@ temp/
 
 ## License
 
-See [LICENSE](../LICENSE).
+See [LICENSE](https://github.com/ToledoEM/Bash-blind-rename/blob/master/LICENSE).
