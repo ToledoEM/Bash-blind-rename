@@ -4,3 +4,7 @@ temp/
 *.tmp
 # Ignore macOS system files
 .DS_Store
+# Quarto build output
+doc/*
+!doc/index.qmd
+!doc/app.png
