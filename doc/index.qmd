@@ -11,7 +11,7 @@ format:
     highlight-style: github
 ---
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16878966.svg)](https://doi.org/10.5281/zenodo.16878966)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19227997.svg)](https://doi.org/10.5281/zenodo.19227997)
 [![GitHub](https://img.shields.io/badge/GitHub-ToledoEM%2FBash--blind--rename-181717?logo=github)](https://github.com/ToledoEM/Bash-blind-rename)
 
 A macOS app and Bash scripts to blind-rename files in a folder for unbiased analysis. Original filenames are saved in a dictionary so they can be restored at any time.
