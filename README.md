@@ -1,6 +1,7 @@
 # Blind Rename Files – Swift macOS App & Bash Scripts
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16878966.svg)](https://doi.org/10.5281/zenodo.16878966)
+![Version](https://img.shields.io/badge/version-0.4-blue)
 
 
 A native macOS app (SwiftUI) and Bash scripts to blind-rename files in a folder, saving the mapping of old and new names in a dictionary. Both methods include the ability to revert file names to their original state.

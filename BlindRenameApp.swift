@@ -97,18 +97,24 @@ func blindRename(in dir: URL) -> String {
     if fm.fileExists(atPath: deprecatedURL.path) {
         return "Please delete name_dictionary_DEPRECATED.csv before running"
     }
-    guard let files = try? fm.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) else {
-        return "Cannot read folder"
+    let allEntries: [URL]
+    do {
+        allEntries = try fm.contentsOfDirectory(at: dir, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsHiddenFiles])
+    } catch {
+        return "Cannot read folder: \(error.localizedDescription)"
     }
     var dictLines = ["Oldname,Newname"]
     var analysisLines = ["Newname"]
-    for file in files {
+    for file in allEntries {
+        // Skip subdirectories
+        if (try? file.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true {
+            continue
+        }
         let name = file.lastPathComponent
         if name == "name_dictionary.csv" || name == "Analysis_file.csv" || name == ".DS_Store" || name.lowercased() == "thumbs.db" {
             continue
         }
         let ext = file.pathExtension
-        let base = file.deletingPathExtension().lastPathComponent
         let hash = SHA256.hash(data: Data(name.utf8)).compactMap { String(format: "%02X", $0) }.joined()
         let newBase = String(hash.prefix(20))
         let newName = ext.isEmpty ? newBase : "\(newBase).\(ext)"
@@ -118,11 +124,26 @@ func blindRename(in dir: URL) -> String {
             dictLines.append("\(name),\(newName)")
             analysisLines.append(newName)
         } catch {
-            return "Failed to rename \(name)"
+            // Roll back already-renamed files before returning
+            for entry in dictLines.dropFirst() {
+                let parts = entry.components(separatedBy: ",")
+                if parts.count == 2 {
+                    let origURL = dir.appendingPathComponent(parts[0])
+                    let renamedURL = dir.appendingPathComponent(parts[1])
+                    try? fm.moveItem(at: renamedURL, to: origURL)
+                }
+            }
+            try? fm.removeItem(at: dictURL)
+            try? fm.removeItem(at: analysisURL)
+            return "Failed to rename \(name): \(error.localizedDescription)"
         }
     }
-    try? dictLines.joined(separator: "\n").write(to: dictURL, atomically: true, encoding: .utf8)
-    try? analysisLines.joined(separator: "\n").write(to: analysisURL, atomically: true, encoding: .utf8)
+    do {
+        try dictLines.joined(separator: "\n").write(to: dictURL, atomically: true, encoding: .utf8)
+        try analysisLines.joined(separator: "\n").write(to: analysisURL, atomically: true, encoding: .utf8)
+    } catch {
+        return "Renamed files but failed to write mapping: \(error.localizedDescription)"
+    }
     return "DONE"
 }
 
@@ -135,18 +156,27 @@ func revertRename(in dir: URL) -> String {
     }
     let lines = dictData.components(separatedBy: .newlines)
     for line in lines.dropFirst() {
-        let parts = line.components(separatedBy: ",")
-        if parts.count == 2 {
-            let orig = parts[0]
-            let new = parts[1]
-            let origURL = dir.appendingPathComponent(orig)
-            let newURL = dir.appendingPathComponent(new)
-            if fm.fileExists(atPath: newURL.path) {
-                try? fm.moveItem(at: newURL, to: origURL)
-            }
+        guard !line.isEmpty else { continue }
+        // Split only on first comma to handle filenames containing commas
+        guard let commaIndex = line.firstIndex(of: ",") else { continue }
+        let orig = String(line[line.startIndex..<commaIndex])
+        let new = String(line[line.index(after: commaIndex)...])
+        let origURL = dir.appendingPathComponent(orig)
+        let newURL = dir.appendingPathComponent(new)
+        guard fm.fileExists(atPath: newURL.path) else {
+            return "Error: expected file not found: \(new)"
+        }
+        do {
+            try fm.moveItem(at: newURL, to: origURL)
+        } catch {
+            return "Failed to revert \(new): \(error.localizedDescription)"
         }
     }
-    try? fm.moveItem(at: dictURL, to: deprecatedURL)
+    do {
+        try fm.moveItem(at: dictURL, to: deprecatedURL)
+    } catch {
+        return "Reverted files but failed to deprecate dictionary: \(error.localizedDescription)"
+    }
     return "File names reverted to original. Dictionary deprecated. DONE"
 }
 
