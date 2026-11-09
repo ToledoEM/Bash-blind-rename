@@ -6,7 +6,6 @@
 [![Docs](https://img.shields.io/badge/docs-zensical-blue)](https://toledoem.github.io/Bash-blind-rename/)
 [![License](https://img.shields.io/github/license/ToledoEM/Bash-blind-rename)](LICENSE)
 
-
 A native macOS app (SwiftUI) and Bash scripts to blind-rename files in a folder, saving the mapping of old and new names in a dictionary. Both methods include the ability to revert file names to their original state.
 
 ## Choose Your Method
@@ -37,12 +36,12 @@ A native macOS app (SwiftUI) and Bash scripts to blind-rename files in a folder,
 
 ![App Screenshot](app.png)
 
-### Requirements
+### App requirements
 
 - macOS 12 or later
 - Xcode 13 or later
 
-### Usage
+### App usage
 
 1. **Open the Project:**
    - Open `BashBlindRename.xcodeproj` in Xcode.
@@ -58,23 +57,28 @@ A native macOS app (SwiftUI) and Bash scripts to blind-rename files in a folder,
 
 ## Bash Scripts
 
-### Requirements
+### Script requirements
 
 - Bash (macOS or Linux)
 - `shasum` utility (pre-installed on most systems)
 
-### Usage
+### Script usage
 
 1. Make the scripts executable:
+
    ```bash
    chmod +x bash_blind_rename.sh
    chmod +x revert_rename.sh
    ```
+
 2. To obfuscate the names in a folder (e.g., `temp/`):
+
    ```bash
    ./bash_blind_rename.sh temp/
    ```
+
 3. To revert file names:
+
    ```bash
    ./revert_rename.sh temp/
    ```
@@ -83,40 +87,38 @@ A native macOS app (SwiftUI) and Bash scripts to blind-rename files in a folder,
 
 **Before:**
 
-```
+```text
    Mac:user$ ls -lF temp/
-	total 0
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_1.txt    
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_10.txt    
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_2.txt    
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_3.txt    
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_4.txt   
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_5.txt   
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_6.txt    
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_7.txt    
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_8.txt   
-	-rw-r--r--   1 et  staff    0 May  4 21:56 foo_9.txt    
-	drwxr-xr-x  12 et  staff  408 May  4 21:56 subfolder/     
-	
-	Mac:Bash_blind_renamer user$ ls -lF temp/subfolder/
-	total 0
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_1.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_10.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_2.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_3.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_4.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_5.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_6.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_7.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_8.txt
-	-rw-r--r--  1 et  staff  0 May  4 21:56 bar_9.txt
+    total 0
+    -rw-r--r--   1 et  staff    0 May  4 21:56 foo_1.txt    
+    -rw-r--r--   1 et  staff    0 May  4 21:56 foo_10.txt    
+    -rw-r--r--   1 et  staff    0 May  4 21:56 foo_2.txt    
+    -rw-r--r--   1 et  staff    0 May  4 21:56 foo_3.txt    
+    -rw-r--r--   1 et  staff    0 May  4 21:56 foo_4.txt   
+    -rw-r--r--   1 et  staff    0 May  4 21:56 foo_5.txt   
+    -rw-r--r--   1 et  staff    0 May  4 21:56 foo_6.txt    
+    -rw-r--r--   1 et  staff    0 May  4 21:56 foo_7.txt    
+    -rw-r--r--   1 et  staff    0 May  4 21:56 foo_8.txt   
+    -rw-r--r--   1 et  staff    0 May  4 21:56 foo_9.txt    
+    drwxr-xr-x  12 et  staff  408 May  4 21:56 subfolder/     
+    
+    Mac:Bash_blind_renamer user$ ls -lF temp/subfolder/
+    total 0
+    -rw-r--r--  1 et  staff  0 May  4 21:56 bar_1.txt
+    -rw-r--r--  1 et  staff  0 May  4 21:56 bar_10.txt
+    -rw-r--r--  1 et  staff  0 May  4 21:56 bar_2.txt
+    -rw-r--r--  1 et  staff  0 May  4 21:56 bar_3.txt
+    -rw-r--r--  1 et  staff  0 May  4 21:56 bar_4.txt
+    -rw-r--r--  1 et  staff  0 May  4 21:56 bar_5.txt
+    -rw-r--r--  1 et  staff  0 May  4 21:56 bar_6.txt
+    -rw-r--r--  1 et  staff  0 May  4 21:56 bar_7.txt
+    -rw-r--r--  1 et  staff  0 May  4 21:56 bar_8.txt
+    -rw-r--r--  1 et  staff  0 May  4 21:56 bar_9.txt
 ```
-
 
 **After Blind Rename:**
 
-
-```
+```text
 Mac:Bash_blind_renamer user$ ls -lF temp/
 total 8
 -rw-r--r--   1 et  staff    0 May  4 21:56 007937B3F4F4D9F58B7D.txt
@@ -145,7 +147,6 @@ total 0
 -rw-r--r--  1 et  staff  0 May  4 21:56 bar_8.txt
 -rw-r--r--  1 et  staff  0 May  4 21:56 bar_9.txt
 ```
-
 
 Subfolders are not affected.
 

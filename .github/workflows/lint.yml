@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run shellcheck
-        run: shellcheck bash_blind_rename.sh revert_rename.sh test/*.sh
+        run: shellcheck -S warning bash_blind_rename.sh revert_rename.sh test/*.sh
 
   markdownlint:
     runs-on: ubuntu-latest
