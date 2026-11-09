@@ -3,8 +3,17 @@ temp/
 *.log
 *.tmp
 # Ignore macOS system files
-.DS_Store
-# Quarto build output
-doc/*
-!doc/index.qmd
-!doc/app.png
+**/.DS_Store
+# Zensical build output
+site/
+.cache/
+# Python / uv
+.venv/
+__pycache__/
+# Claude / Status Bank (never tracked)
+CLAUDE.md
+CLAUDE-*.md
+.claude/
+
+# test files
+test/test_example/*

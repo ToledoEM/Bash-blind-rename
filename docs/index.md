@@ -1,17 +1,10 @@
----
-title: "Blind Rename Files"
-subtitle: "Obfuscate filenames for unbiased analysis — macOS App & Bash Scripts"
-format:
-  html:
-    theme: cosmo
-    toc: true
-    toc-depth: 2
-    toc-title: "Contents"
-    code-copy: true
-    highlight-style: github
----
+# Blind Rename Files
+
+Obfuscate filenames for unbiased analysis: macOS App & Bash Scripts
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19227997.svg)](https://doi.org/10.5281/zenodo.19227997)
+[![gh-pages](https://github.com/ToledoEM/Bash-blind-rename/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/ToledoEM/Bash-blind-rename/actions/workflows/gh-pages.yml)
+[![lint](https://github.com/ToledoEM/Bash-blind-rename/actions/workflows/lint.yml/badge.svg)](https://github.com/ToledoEM/Bash-blind-rename/actions/workflows/lint.yml)
 [![GitHub](https://img.shields.io/badge/GitHub-ToledoEM%2FBash--blind--rename-181717?logo=github)](https://github.com/ToledoEM/Bash-blind-rename)
 
 A macOS app and Bash scripts to blind-rename files in a folder for unbiased analysis. Original filenames are saved in a dictionary so they can be restored at any time.
@@ -25,14 +18,40 @@ Each file in a folder is renamed to a 20-character uppercase hash derived from i
 Files created in the folder:
 
 | File | Purpose |
-|---|---|
+| --- | --- |
 | `name_dictionary.csv` | Maps original names to obfuscated names |
 | `Analysis_file.csv` | List of obfuscated names only, for use during blind analysis |
 | `name_dictionary_DEPRECATED.csv` | Renamed from dictionary after a successful revert |
 
-: {tbl-colwidths="[35,65]"}
-
 Subfolders are never touched.
+
+---
+
+## How it works
+
+```mermaid
+flowchart TD
+    A[Select folder] --> B{Run as root?}
+    B -- yes --> X[Abort]
+    B -- no --> C{name_dictionary.csv or<br/>Analysis_file.csv exists?}
+    C -- yes --> X1[Abort: already renamed]
+    C -- no --> D{name_dictionary_DEPRECATED.csv<br/>exists?}
+    D -- yes --> X2[Abort: already randomized once<br/>delete DEPRECATED file]
+    D -- no --> E{200 or more files?}
+    E -- "yes, user answers N" --> X3[Exit, no changes]
+    E -- "no, or user answers Y" --> F[Next file in folder<br/>top level only, subfolders skipped]
+    F --> G{name_dictionary.csv, Analysis_file.csv,<br/>.DS_Store or Thumbs.db?}
+    G -- yes --> F
+    G -- no --> H[SHA hash of filename<br/>uppercase, first 20 alphanumeric chars]
+    H --> I[Keep original extension]
+    I --> J[Rename file]
+    J --> K[Append Old,New to name_dictionary.csv<br/>append New to Analysis_file.csv]
+    K -- more files --> F
+    K -- all files done --> L[Blind analysis using Analysis_file.csv]
+    L --> M[Revert: read name_dictionary.csv]
+    M --> N[Restore original names]
+    N --> O[Rename dictionary to<br/>name_dictionary_DEPRECATED.csv]
+```
 
 ---
 
@@ -42,9 +61,8 @@ Subfolders are never touched.
 
 Download `BashBlindRename.app` from the [releases page](https://github.com/ToledoEM/Bash-blind-rename/releases).
 
-::: {.callout-note}
-Requires macOS 12 or later. No installation — double-click and run.
-:::
+!!! note
+    Requires macOS 12 or later. No installation: double-click and run.
 
 1. Open the app.
 2. Drag and drop your folder onto the drop zone.
@@ -58,7 +76,7 @@ Requires macOS 12 or later. No installation — double-click and run.
 ### Requirements
 
 - Bash (macOS or Linux)
-- `shasum` — pre-installed on macOS and most Linux systems
+- `shasum`, pre-installed on macOS and most Linux systems
 
 ### Setup
 
@@ -133,12 +151,11 @@ temp/
 
 ## Safety rules
 
-::: {.callout-warning}
-- Will not run if `name_dictionary.csv` or `Analysis_file.csv` already exist in the folder.
-- Will not run if `name_dictionary_DEPRECATED.csv` exists — delete it first to re-run.
-- Does not run as root/superuser.
-- Does not recurse into subfolders.
-:::
+!!! warning
+    - Will not run if `name_dictionary.csv` or `Analysis_file.csv` already exist in the folder.
+    - Will not run if `name_dictionary_DEPRECATED.csv` exists. Delete it first to re-run.
+    - Does not run as root/superuser.
+    - Does not recurse into subfolders.
 
 ---
 
